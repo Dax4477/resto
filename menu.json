@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Margherita Pizza",
+        "category": "Pizza",
+        "price": "250"
+    },
+    {
+        "name": "Cold Coffee",
+        "category": "Beverages",
+        "price": "90"
+    }
+]
