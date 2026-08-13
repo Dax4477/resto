@@ -2,51 +2,265 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Digital Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Digital Menu - Slideshow</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { background: #111; color: #fff; font-family: sans-serif; padding: 40px; overflow: hidden; }
-        h1 { text-align: center; color: #f1c40f; font-size: 3rem; margin-bottom: 40px; }
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 50px; }
-        .item { display: flex; justify-content: space-between; border-bottom: 1px dashed #444; padding-bottom: 15px; margin-bottom: 20px; font-size: 28px; }
-        .item-details { display: flex; flex-direction: column; }
-        .category-label { font-size: 16px; color: #888; text-transform: uppercase; margin-top: 5px; }
-        .price { color: #2ecc71; font-weight: bold; }
+.item-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.item-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+        :root {
+            --primary: #FFD700;
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-light: #f8fafc;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Outfit', sans-serif; 
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #1e293b, #020617);
+            color: var(--text-light);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 05px 30px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+        }
+        
+        .brand h1 { 
+            font-size: 3.5rem; 
+            font-weight: 700; 
+            color: var(--text-light); 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+        }
+        .brand h1 span { color: var(--primary); }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .slide-indicator {
+            font-size: 1.2rem;
+            background: rgba(255,255,255,0.1);
+            padding: 6px 16px;
+            border-radius: 20px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .clock { 
+            font-size: 2.5rem; 
+            font-weight: 300; 
+            color: var(--primary); 
+        }
+
+        main {
+            flex: 1;
+            padding: 0 10px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr); /* Fixed 2x2 grid (Max 4 items per slide) */
+            gap: 10px 30px;
+            align-content: center;
+        }
+
+        .menu-item {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 10px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            
+            opacity: 0; 
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .item-info { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+        }
+
+        .item-category {
+            font-size: 1.1rem;
+            color: var(--bg-dark);
+            background: var(--primary);
+            padding: 4px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            width: max-content;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .item-name { 
+            font-size: 2.4rem; 
+            font-weight: 500; 
+            letter-spacing: 0.5px;
+        }
+
+        .item-price {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        footer {
+            background: var(--primary);
+            color: var(--bg-dark);
+            padding: 5px 0;
+            font-size: 1.6rem;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ticker {
+            display: inline-block;
+            padding-left: 100vw;
+            animation: scroll 25s linear infinite;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes scroll {
+            to { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body>
-    <h1>Today's Menu</h1>
-    <div class="menu-grid" id="menu-container">
-        <!-- JavaScript will inject menu items here -->
-    </div>
+
+    <header>
+        <div class="brand">
+            <h1>Our <span>Menu</span></h1>
+        </div>
+        <div class="header-right">
+            <div class="slide-indicator" id="slide-indicator">Page 1 of 1</div>
+            <div class="clock" id="live-clock">00:00</div>
+        </div>
+    </header>
+
+    <main id="menu-container">
+        <!-- Slide items injected here -->
+    </main>
+
+    <footer>
+        <div class="ticker">
+            🌟 Welcome! Connect to our Free Wi-Fi: RESTAURANT_GUEST | Ask about our Daily Chef Specials | Tag us on Instagram to get 10% off your next dessert! 🌟
+        </div>
+    </footer>
 
     <script>
-        async function loadMenu() {
-            try {
-                // The ?t= prevents the TV browser from caching the old prices
-                const response = await fetch('menu.json?t=' + new Date().getTime());
-                const menu = await response.json();
-                
-                let html = '';
-                menu.forEach(item => {
-                    html += `
-                        <div class="item">
-                            <div class="item-details">
-                                <span>${item.name}</span>
-                                <span class="category-label">${item.category}</span>
-                            </div>
-                            <span class="price">₹${item.price}</span>
-                        </div>
-                    `;
-                });
-                document.getElementById('menu-container').innerHTML = html;
-            } catch (error) {
-                console.error("Error loading menu:", error);
-            }
-        }
+     let menuData = [];
+let currentSlide = 0;
+const itemsPerPage = 4;
 
-        // Load immediately, then refresh the data every 60 seconds
-        loadMenu();
-        setInterval(loadMenu, 60000); 
+function updateClock() {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    document.getElementById('live-clock').textContent = `${hours}:${minutes} ${ampm}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+function renderSlide() {
+    if (menuData.length === 0) return;
+
+    const totalPages = Math.ceil(menuData.length / itemsPerPage);
+    
+    if (currentSlide >= totalPages) {
+        currentSlide = 0;
+    }
+
+    const start = currentSlide * itemsPerPage;
+    const chunk = menuData.slice(start, start + itemsPerPage);
+
+    let html = '';
+    chunk.forEach((item, index) => {
+        const delay = index * 0.1;
+        
+        // Check if an image exists, otherwise don't show the image tag
+        const imageHtml = item.image 
+            ? `<img src="${item.image}" class="item-image" alt="Menu Image">` 
+            : '';
+
+        html += `
+            <div class="menu-item" style="animation-delay: ${delay}s">
+                <div class="item-content">
+                    ${imageHtml}
+                    <div class="item-info">
+                        <span class="item-category">${item.category}</span>
+                        <span class="item-name">${item.name}</span>
+                    </div>
+                </div>
+                <span class="item-price">₹${item.price}</span>
+            </div>
+        `;
+    });
+
+    document.getElementById('menu-container').innerHTML = html;
+    document.getElementById('slide-indicator').textContent = `Page ${currentSlide + 1} of ${totalPages}`;
+
+    currentSlide++;
+}
+
+async function fetchMenu() {
+    try {
+        const response = await fetch('menu.json?t=' + new Date().getTime());
+        menuData = await response.json();
+        renderSlide(); 
+    } catch (error) {
+        console.error("Error loading menu:", error);
+    }
+}
+
+fetchMenu();
+setInterval(fetchMenu, 60000); 
+setInterval(renderSlide, 8000);
     </script>
 </body>
 </html>
